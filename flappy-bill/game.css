@@ -1,0 +1,344 @@
+:root {
+  /* Palette slugs mirror theme.json so each value can be traced to its source. */
+  --deep-navy-blue: #0d132d;
+  --navy-blue: #151a30;
+  --navy-accent: #141f4d;
+  --zodiac-blue: #0b1b33;
+  --vivid-cyan: #0dcbff;
+  --money: #389800;
+  --amber: #ffbd00;
+  --pale-gray: #d9dee8;
+  --stone: #e8e6e0;
+
+  --bg: var(--deep-navy-blue);
+  --panel: var(--navy-blue);
+  --ink: var(--stone);
+  --muted: #8d97ad;
+  --accent: var(--amber);
+
+  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+
+  color-scheme: dark;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Page basics, keyed to the page classes rather than to `body`.
+ *
+ * These pages get pasted into pages that are not ours — a WordPress block, say
+ * — and a bare `body` selector in the stylesheet that travels with them
+ * restyles the host page's background, colour and type. On the class instead,
+ * everything a page needs rides on the element that carries the class and
+ * nothing outside it is touched. That also decouples the layout from the body
+ * tag: a wrapper element with the class is now a complete game page, which
+ * matters because the body tag is exactly what an editor drops when the markup
+ * is inlined. */
+
+.game-body,
+.menu-body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- game page ---------- */
+
+.game-body {
+  display: flex;
+  flex-direction: column;
+  /* Small viewport unit: on mobile the URL bar collapses and 100vh overflows,
+     which pushes the footer off-screen and scrolls the canvas mid-shot. */
+  height: 100svh;
+}
+
+.game-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--panel);
+  flex: 0 0 auto;
+}
+
+/* The footer is now the only bar on a standard game page, and it reads left to
+ * right: sound, then the controls it sits beside, then the brand. flex-start
+ * rather than space-between so the first two stay adjacent instead of being
+ * flung to opposite ends; the brand is pushed back out on its own. */
+footer.game-bar {
+  justify-content: flex-start;
+}
+
+footer.game-bar .brand {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+/* The controls hint is the one footer item that can afford to lose room, so it
+   is the one allowed to. A flex item defaults to min-width:auto, which refuses
+   to shrink past its longest word — that is what was squeezing the pills either
+   side of it rather than the text between them. */
+footer.game-bar .hint {
+  min-width: 0;
+}
+
+.game-bar h1 {
+  margin: 0;
+  /* Instrument Serif is the site's display face; the title is the one place on
+     these pages that warrants it. */
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.back {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.back:hover,
+.back:focus-visible {
+  color: var(--vivid-cyan);
+}
+
+.back:focus-visible {
+  outline: 2px solid var(--vivid-cyan);
+  outline-offset: 4px;
+}
+
+.stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: block;
+  position: relative;
+  /* The crosshair is drawn in-canvas, so hide the OS cursor over the field. */
+  cursor: none;
+  /* Stop a drag from selecting the page or triggering pull-to-refresh. */
+  user-select: none;
+  touch-action: none;
+}
+
+.pixel-screen {
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* ---------- embedding ---------- */
+
+/* Narrow phones. Everything in the footer steps down together so the three
+   items still sit on one row at 340px, which is the narrowest we support. */
+@media (max-width: 420px) {
+  footer.game-bar {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  footer.game-bar .toggle {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  footer.game-bar .brand {
+    padding: 3px 7px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  footer.game-bar .hint {
+    font-size: 11px;
+  }
+}
+
+/* The bars cost a fixed ~74px. In a full window that is nothing; in a 360px
+   embed it is a fifth of the game. So they give ground as height runs out,
+   rather than squeezing the playfield to keep a title visible. */
+
+@media (max-height: 560px) {
+  .game-bar {
+    padding: 4px 10px;
+  }
+
+  .game-bar h1 {
+    font-size: 15px;
+  }
+
+  .game-bar .hint {
+    display: none;
+  }
+}
+
+@media (max-height: 400px) {
+  /* Below this the chrome costs more than it tells anyone. The keyboard
+     shortcuts it documents still work. */
+  .game-bar {
+    display: none;
+  }
+
+  /* Except the sound toggle. It used to have a home in the header bar, so
+     dropping the footer only cost a duplicate; now the footer is the only bar
+     and hiding it would leave a short touch device — which has no M key to
+     fall back on — with no way to mute at all. The bar collapses to just the
+     button. */
+  footer.game-bar {
+    display: flex;
+    padding: 2px 8px;
+    background: none;
+  }
+
+  footer.game-bar .hint,
+  footer.game-bar .brand {
+    display: none;
+  }
+}
+
+.embed .game-bar {
+  display: none;
+}
+
+/* ---------- menu page ---------- */
+
+.menu-body {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: 24px;
+}
+
+.menu {
+  width: min(560px, 100%);
+}
+
+.menu h1 {
+  margin: 0 0 6px;
+  font-family: var(--serif);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.game-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.game-list a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.game-list a:hover,
+.game-list a:focus-visible {
+  border-color: var(--vivid-cyan);
+}
+
+.game-list span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- branding ---------- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--navy-accent);
+  border-radius: 999px;
+  background: var(--zodiac-blue);
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand:hover,
+.brand:focus-visible {
+  border-color: var(--amber);
+}
+
+.brand-mark {
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.brand-text {
+  font-weight: 600;
+}
+
+/* On the menu the lockup leads rather than sitting in a corner. */
+.brand-lead {
+  margin-top: 14px;
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+/* ---------- sound toggle ---------- */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--navy-accent);
+  border-radius: 999px;
+  background: var(--zodiac-blue);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  /* "Sound on" broke across two lines in a narrow footer, which doubled the
+     bar's height and shoved the playfield up. A pill label is single-line by
+     definition, and the pill is not the item that should be giving ground. */
+  white-space: nowrap;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  border-color: var(--accent);
+}
+
+/* Visible focus ring: the button is reachable by keyboard and must show it. */
+.toggle:focus-visible {
+  outline: 2px solid var(--vivid-cyan);
+  outline-offset: 2px;
+}
+
+.toggle-icon {
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* Muted state is carried by aria-pressed, so the styling follows the same
+   source of truth the screen reader uses rather than a separate class. */
+.toggle[aria-pressed="false"] {
+  color: var(--muted);
+}
+
+.toggle[aria-pressed="false"] .toggle-icon {
+  color: var(--muted);
+  text-decoration: line-through;
+}
