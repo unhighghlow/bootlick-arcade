@@ -1,0 +1,172 @@
+/* Arcade faces, self-hosted. */
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("./press-start-2p.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "VT323";
+  src: url("./vt323.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  --neon-pink: #ff006e;
+  --neon-cyan: #06ffa5;
+  --neon-amber: #ffbe0b;
+  --neon-orange: #fb5607;
+  --neon-purple: #8338ec;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.game-wrapper{
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+  font-family: 'VT323', monospace;
+  color: var(--neon-cyan);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(255, 0, 110, 0.08), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(6, 255, 165, 0.06), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cabinet {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, #2a0a3e 0%, #1a0420 100%);
+  padding: 22px 22px 18px;
+  border-radius: 20px;
+  box-shadow:
+    0 0 80px rgba(255, 0, 110, 0.25),
+    0 0 30px rgba(6, 255, 165, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.4);
+  border: 2px solid #4a1060;
+}
+
+.screen-wrap {
+  position: relative;
+  width: 900px;
+  height: 650px;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 80px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(255, 0, 110, 0.2);
+  border: 3px solid #1a0420;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  /* The game reads raw touches; without this the browser claims the drags
+     first and scrolls or double-tap-zooms the cabinet instead. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.18) 0px,
+    rgba(0, 0, 0, 0.18) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 10;
+  mix-blend-mode: multiply;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.65) 100%);
+  pointer-events: none;
+  z-index: 11;
+}
+
+.crt-flicker {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 0, 110, 0.015);
+  pointer-events: none;
+  z-index: 12;
+  animation: flicker 0.13s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.85; }
+  50% { opacity: 1; }
+  100% { opacity: 0.92; }
+}
+
+.controls {
+  margin-top: 16px;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--neon-amber);
+  text-shadow: 0 0 10px var(--neon-amber);
+  letter-spacing: 1.5px;
+  line-height: 1.6;
+}
+
+.controls .key {
+  color: var(--neon-cyan);
+  background: rgba(6, 255, 165, 0.08);
+  padding: 3px 6px;
+  border: 1px solid rgba(6, 255, 165, 0.3);
+  border-radius: 3px;
+  margin: 0 2px;
+}
+
+.footer-tag {
+  margin-top: 6px;
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 2px;
+}
+
+/* Only one control legend at a time: the keyboard line on anything with a
+   pointer that hovers, the gesture line on everything else. */
+.touch-controls { display: none; }
+
+@media (hover: none) and (pointer: coarse) {
+  .controls:not(.touch-controls) { display: none; }
+  .touch-controls { display: block; }
+}
+
+@media (max-width: 1000px), (max-height: 800px) {
+  .cabinet { transform: scale(0.75); transform-origin: center top; margin-top: -50px; }
+}
+@media (max-width: 750px) {
+  .cabinet { transform: scale(0.55); }
+}
+@media (max-width: 550px) {
+  .cabinet { transform: scale(0.4); }
+}
