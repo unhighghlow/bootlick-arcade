@@ -138,6 +138,10 @@
   color: var(--wh-dim);
 }
 
+.wh-landing__tagline a {
+  color: white;
+}
+
 .wh-landing__brand {
   display: inline-flex;
   align-items: center;
