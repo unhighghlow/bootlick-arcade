@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMax slice">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#04050a"/><stop offset=".38" stop-color="#190b13"/><stop offset=".72" stop-color="#59181d"/><stop offset="1" stop-color="#110a0d"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#c22929" stop-opacity=".5"/><stop offset="1" stop-color="#771922" stop-opacity="0"/></radialGradient>
+ <linearGradient id="ground" x2="0" y2="1"><stop stop-color="#09090c"/><stop offset="1" stop-color="#020407"/></linearGradient>
+ <filter id="fog"><feGaussianBlur stdDeviation="22"/></filter>
+ <pattern id="windows" width="30" height="38" patternUnits="userSpaceOnUse"><rect x="8" y="9" width="8" height="14" fill="#6f292c" opacity=".45"/></pattern>
+</defs>
+<path fill="url(#sky)" d="M0 0h1600v1100H0z"/>
+<ellipse cx="1050" cy="710" rx="690" ry="500" fill="url(#glow)"/>
+<circle cx="1270" cy="220" r="97" fill="#931e25" opacity=".38"/>
+<g fill="#090810" opacity=".82" filter="url(#fog)"><path d="M870 159q260-62 440 9t330 44v45q-203-17-330-1t-420-39Z"/><path d="M-130 287q341-83 622-24t369 87l-74 54q-260-74-401-51t-540-7Z"/></g>
+<!-- Distant abandoned streets, fractured roofs and inactive chimneys. -->
+<path fill="#2c151c" d="M0 727V590h79v-34h63v79h46V471l23 9 9-22 29 8 23-15 15 32v208h52V585h69v-61h56v114h40V489h20v-67h11v67h47v-19h24v131h42v-62h74v-39h57v141h32V575h50v-28h63v67h41V502h24v-15h66v23h19v139h34V575h76v-78h19v-37h10v37h42v211h63V558l23 8 22-29 19 14 20-5 26 18v164h51V486h21v-17h79v161h58V509h75v218h73v373H0Z"/>
+<path fill="#170f15" d="M0 802V709h110v-83h62v27h46v107h55V605h30v-33h15v33h47v172h53V697h72v-38h50v170h48V739h38v-24h83v111h52V689h69v-52h51v197h62V713h47v-25h83v145h38V701h69v-47h27v-52h10v52h57v168h47V638h26v-22h65v37h47v154h81v-91h109v374H0Z"/>
+<!-- Near ruins at the edges frame the playable board. -->
+<path id="leftwall" fill="#08090e" d="M0 339l44 9 17-24 32 21 16-34 18 35 41-14 19 18 13-5v30l-20 31 17 25-24 21 18 14v236l-26 12 15 27-20 29 9 20v316h91V567l25-17 11-46 24 13 12-31 24 8 25-19 33 24v25l-20 10 25 23v157l-24 23 7 42-21 10 24 49v262H0Z"/>
+<path fill="url(#windows)" opacity=".65" d="M0 367h146v422H0zM271 543h45v257h-45z"/>
+<path fill="#07080d" d="M1339 1100V573l-20-15 9-34-28-14 19-26-20-27 18-21v-62l23-4 9-24 18 10 26-38 22 19 21-6 4-31 12 6v-23h24v17l17 23 23-13 24 26-6 239h27l-2-76 23-27 35 12 29-26 30 19 14-42 13 11v698Z"/>
+<path fill="url(#windows)" opacity=".75" d="M1351 410h58v351h-58zM1502 587h98v240h-98z"/>
+<!-- Exposed floor plates, split concrete and rebar. -->
+<g fill="none" stroke="#8b3334" stroke-width="2" opacity=".45"><path d="M2 424h127l23-13M0 481h150M0 543h142M0 607h141M0 669h140M272 588h40M272 642h36M1370 474h85M1361 536h91M1353 601h83M1349 666h77M1513 648h87M1518 714h82"/></g>
+<g fill="none" stroke="#030409" stroke-width="4"><path d="m110 343 10-69m4 71 18-95m-15 255 28 13-14 29 13 20-23 45m181-89 7-62m5 66 19-43m1061-142-5-66m10 69 18-53m-63 195 20 19-15 31 13 13-18 23"/></g>
+<!-- Bare trees and twisted street lights. -->
+<g fill="none" stroke="#05070b" stroke-linecap="round"><path stroke-width="15" d="m398 1080-19-234-32-118-10-133m40 241 51-99 34-52m-103 59-45-63-53-17m79-25 37-48 5-57"/><path stroke-width="6" d="m427 739 68-12 24-30m-64-9 2-77m-89 63 51-27m-103 48-12-55-32-32m68 22-45-21-21-51m94 54-12-40m-47 110-17-38"/><path stroke-width="7" d="m1168 1040 15-270q-6-34-39-37m39 44 17-78q2-24 36-25"/><path stroke-width="3" d="m1116 750 54-3m47-64 43-2"/></g>
+<!-- Sloping rubble: fallen masonry, broken columns, cracked pavement. -->
+<path fill="url(#ground)" d="M0 924l50-11 33 25 41-18 48 22 54-16 30 44 60-18 35 39 66-9 58 28 40-17 57 23 94-16 59 29 96-34 105 24 58-29 48 9 49-33 47 20 36-41 30 15 39-27 37 21 54-17 44 13 46-29 55 17 36-32 58 5 12-27 39 21v193H0Z"/>
+<g fill="#151116" stroke="#512527" stroke-width="1"><path d="m55 950 58-24 26 18-12 31-58 7Z"/><path d="m171 960 34-29 36 12-6 26Z"/><path d="m490 1026 42-17 30 26-14 14Z"/><path d="m1122 985 30-22 32 12-12 29Z"/><path d="m1311 963 56-34 31 17-9 39Z"/><path d="m1410 950 45-26 29 22-16 29Z"/></g>
+<path fill="#171118" stroke="#49252a" stroke-width="2" d="m15 1074 188-72 7-22 42-2 18 39-17 17-27-8-183 76Z"/>
+<path fill="none" stroke="#54262a" stroke-width="2" opacity=".5" d="m625 1100 51-47-19-15 44-26m-19 47 74 5 36-18m151 54-52-31 14-17-49-25m-8 29-63-5"/>
+<ellipse cx="889" cy="803" rx="470" ry="35" fill="#a82c2d" opacity=".07" filter="url(#fog)"/>
+</svg>

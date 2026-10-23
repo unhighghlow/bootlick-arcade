@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="game.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+
+<body>
+<div class="ruin-scene" aria-hidden="true"><div class="ruin-haze"></div><div class="ruin-embers"></div></div>
+<main id="game">
+    <section id="play" class="play">
+        <div class="intro">
+            <h1 class="escape-heading">
+                <span>Escape from</span>
+                <br/>
+                <em>Socialism</em>
+            </h1>
+            <p class="lede">
+                Match the pictures.<br/>Uncover the damage.
+            </p>
+            <div id="pair-track" class="pair-track" aria-label="Your six pairs"></div>
+            <p id="intro-note" class="intro-note">Six new pairs. The cost is yours.</p>
+            <div id="latest-cost" class="latest-cost" hidden>
+                <span id="latest-art" class="latest-art art" aria-hidden="true"></span>
+                <div>
+                    <span class="latest-kicker">COST UNCOVERED</span>
+                    <strong id="latest-value"></strong>
+                    <span id="latest-unit"></span>
+                </div>
+                <h2 id="latest-title"></h2>
+                <p id="latest-context"></p>
+                <a id="latest-source" target="_blank" rel="noopener noreferrer">CEA projection · read the report ↗</a>
+            </div>
+        </div>
+        <div class="board-area">
+            <div class="level-band">
+                <div>
+                    <span id="level-number">LEVEL 1 / 3</span>
+                    <h2 id="level-name">Your budget</h2>
+                </div>
+                <div id="level-path" class="level-path" aria-label="Level progress"></div>
+            </div>
+            <div class="board-top">
+                <div class="stats">
+                    <div>
+                        <span class="stat-label">PAIRS</span>
+                        <strong id="pairs">0 / 6</strong>
+                    </div>
+                    <div>
+                        <span class="stat-label">MOVES</span>
+                        <strong id="moves">0</strong>
+                    </div>
+                </div>
+                <button id="shuffle" class="shuffle">
+                    Restart game <span aria-hidden="true">↻</span>
+                </button>
+            </div>
+            <div id="progress-bar" class="progress-bar" role="progressbar" aria-label="Pairs matched" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0">
+                <span id="progress-fill"></span>
+            </div>
+            <div id="board" class="board" role="group" aria-label="Memory matching cards"></div>
+            <p id="turn-hint" class="turn-hint">Flip any two cards to find a pair.</p>
+        </div>
+    </section>
+    <section id="level-finish" class="level-finish" hidden>
+        <p class="eyebrow">NEW LEVEL UNLOCKED</p>
+        <h2 id="cleared-title">Level 1 complete.</h2>
+        <p id="cleared-stats" class="cleared-stats"></p>
+        <div class="next-panel">
+            <p id="next-number" class="eyebrow">UP NEXT · LEVEL 2</p>
+            <h3 id="next-title">Your future</h3>
+            <p id="next-description"></p>
+            <div id="next-preview" class="next-preview" aria-label="New pictures in the next level"></div>
+            <p id="next-detail" class="next-detail"></p>
+        </div>
+        <button id="next-level" class="primary">
+            PLAY LEVEL 2 <span aria-hidden="true">→</span>
+        </button>
+        <p class="save-note">Keep playing to unlock all three levels.</p>
+    </section>
+    <section id="ending" class="ending" hidden>
+        <p class="eyebrow">
+            ALL 3 LEVELS COMPLETE · 23 PAIRS <span class="end-divider">/</span>
+            <span id="end-moves"></span>
+        </p>
+        <h2>
+            You cleared every level.<br/>
+            <em>Now you know the cost.</em>
+        </h2>
+        <p class="end-lede">Socialism destroys what you build.</p>
+        <div id="consequence-list" class="consequence-list"></div>
+        <p class="end-attribution">Council of Economic Advisers projections · October 2026</p>
+        <div class="end-actions">
+            <button id="replay" class="primary">
+                PLAY FROM LEVEL 1 <span aria-hidden="true">↻</span>
+            </button>
+            <button id="end-report" class="menu-button">Read the report ↗</button>
+        </div>
+    </section>
+    <footer class="footer">
+        <span>Based on CEA’s October 2026 projections.</span>
+        <div class="topbar footer-toolbar">
+            <a class="brand" href="" target="_top" aria-label="White House Arcade">
+                <img decoding="async" src="images/wh.png" width="30" height="30" alt=""/>
+                <span>
+                    WHITE HOUSE<br/>
+                    <b>ARCADE</b>
+                </span>
+            </a>
+            <nav aria-label="Game menu">
+                <button id="report-open" class="menu-button">The report ↗</button>
+                <button id="sound" class="menu-button" aria-label="Mute sound" aria-pressed="true">Sound on</button>
+            </nav>
+        </div>
+    </footer>
+</main>
+
+<dialog id="cost-dialog" class="cost-dialog" aria-labelledby="cost-title" aria-describedby="cost-unit cost-context">
+    <div class="cost-heading">
+        <span class="match-label">✓ MATCH FOUND</span>
+        <span id="match-count"></span>
+    </div>
+    <div class="promise-strip">
+        <span id="cost-art" class="cost-art art" aria-hidden="true"></span>
+        <div>
+            <span class="tiny-label">THE PROMISE</span>
+            <p id="cost-promise"></p>
+            <span id="cost-policy"></span>
+        </div>
+    </div>
+    <div class="cost-body">
+        <span id="cost-topic" class="tiny-label"></span>
+        <h2 id="cost-title"></h2>
+        <strong id="cost-value" class="cost-value"></strong>
+        <p id="cost-unit" class="cost-unit"></p>
+        <p id="cost-context" class="cost-context"></p>
+        <a id="cost-source" class="cost-source" target="_blank" rel="noopener noreferrer"></a>
+    </div>
+    <button id="continue" class="primary">
+        KEEP MATCHING <span aria-hidden="true">→</span>
+    </button>
+</dialog>
+<dialog id="report-dialog" class="report-dialog" aria-labelledby="report-title">
+    <div class="dialog-top">
+        <span class="eyebrow">THE SOURCE</span>
+        <button id="report-close" class="close" aria-label="Close report">×</button>
+    </div>
+    <h2 id="report-title">
+        The report behind<br/>the cards.
+    </h2>
+    <p>The findings come from the Council of Economic Advisers’ October 2026 analysis of the Democratic Socialists of America’s 2026 policy agenda.</p>
+    <p>The promises are short game paraphrases. The costs are CEA projections. Tax financing and borrowing are separate scenarios; each matched pair identifies the policy or scenario behind its figure.</p>
+    <a class="primary" href="https://www.whitehouse.gov/wp-content/uploads/2026/10/The-Real-Cost-of-Socialism-In-America-Summary.pdf" target="_blank" rel="noopener noreferrer">
+        READ THE SUMMARY <span aria-hidden="true">↗</span>
+    </a>
+</dialog>
+<div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+
+</body>
+
+<script src="game.js"></script>
